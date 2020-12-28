@@ -1,21 +1,21 @@
-
 let monkey , monkey_running, monkey_still;
 let banana ,bananaImage, obstacle, obstacleImage;
 let foodGroup, obstacleGroup;
 let ground;
 let score = 0,
     fruit = 0;
-let gameState = 1,
-    PLAY = 1,
-    END = 0;
+let gameState = 1;
+const gameStates = {
+  "PLAY" : 1 ,
+  "END" : 0,
+}
 
 function preload() {
   // Loading in all animations and images for the game
-  monkey_running = loadAnimation("sprite_0.png","sprite_1.png","sprite_2.png","sprite_3.png","sprite_4.png","sprite_5.png","sprite_6.png","sprite_7.png","sprite_8.png")
-  
-  monkey_still = loadAnimation("sprite_1.png")
-  bananaImage = loadImage("banana.png");
-  obstaceImage = loadImage("obstacle.png");
+  monkey_running = loadAnimation("assets/sprite_0.png","assets/sprite_1.png","assets/sprite_2.png","assets/sprite_3.png","assets/sprite_4.png","assets/sprite_5.png","assets/sprite_6.png","assets/sprite_7.png","assets/sprite_8.png");  
+  monkey_still = loadAnimation("assets/sprite_1.png")
+  bananaImage = loadImage("assets/banana.png");
+  obstaceImage = loadImage("assets/obstacle.png");
 }
 
 
@@ -63,7 +63,7 @@ function draw() {
   // Adding gravity to the monkey at all times
   monkey.velocityY = monkey.velocityY + 2;
   
-  if (gameState === PLAY) {
+  if (gameState === gameStates.PLAY) {
     // Increasing the score every second
     score = Math.ceil(frameCount / getFrameRate());
     
@@ -83,12 +83,12 @@ function draw() {
     
     // Spawn an obstacle every 300 frames
     if (frameCount % 300 === 0) {
-      Obstacle();
+      new Obstacle();
     }
     
     // Spawn a fruit with a random Y position every 80 frames
     if (frameCount % 80 === 0) {
-      Fruit(Math.round(random(120, 270)));
+      new Fruit(Math.round(random(120, 270)));
     }
     
     /*
@@ -99,7 +99,7 @@ function draw() {
       if (keyDown(16)) monkey.velocityY = -30;
       else monkey.velocityY = -25;
     }
-  } else if (gameState === END) {
+  } else if (gameState === gameStates.END) {
     // Make sure the animation is still when game over
     monkey.changeAnimation('still', monkey_still);
     
@@ -113,7 +113,7 @@ function draw() {
 }
 
 function endGame() {
-  gameState = END;
+  gameState = 0;
   
   // Stop the obstacles and fruit from disappearing
   obstacleGroup.setVelocityXEach(0);
@@ -124,7 +124,7 @@ function endGame() {
 }
 
 function resetGame() {
-  gameState = PLAY;
+  gameState = 1
   
   // Reset the frame count to 0
   frameCount = 0;
@@ -138,23 +138,4 @@ function resetGame() {
   fruit = 0;
 }
 
-function Fruit(y) {
-  let fruit = createSprite(700, y, 10, 10);
-  fruit.addImage('banana', bananaImage);
-  fruit.scale = 0.1;
-  fruit.velocityX = -(4 + score / 600);
-  fruit.lifetime = 600;
-  fruit.depth = monkey.depth - 1;
-  foodGroup.add(fruit);
-}
 
-function Obstacle() {
-  let obstacle = createSprite(700, 272, 10, 10);
-  obstacle.addImage('stone', obstaceImage);
-  obstacle.scale = 0.1;
-  obstacle.velocityX = -(4 + score / 600);
-  obstacle.lifetime = 600;
-  obstacle.depth = monkey.depth - 1;
-  obstacle.setCollider('circle', 0, 0, 200);
-  obstacleGroup.add(obstacle);
-}

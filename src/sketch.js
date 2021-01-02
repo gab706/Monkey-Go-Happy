@@ -12,10 +12,10 @@ const gameStates = {
 
 function preload() {
   // Loading in all animations and images for the game
-  monkey_running = loadAnimation("assets/sprite_0.png","assets/sprite_1.png","assets/sprite_2.png","assets/sprite_3.png","assets/sprite_4.png","assets/sprite_5.png","assets/sprite_6.png","assets/sprite_7.png","assets/sprite_8.png");  
-  monkey_still = loadAnimation("assets/sprite_1.png")
-  bananaImage = loadImage("assets/banana.png");
-  obstaceImage = loadImage("assets/obstacle.png");
+  monkey_running = loadAnimation("src/assets/sprite_0.png","src/assets/sprite_1.png","src/assets/sprite_2.png","src/assets/sprite_3.png","src/assets/sprite_4.png","src/assets/sprite_5.png","src/assets/sprite_6.png","src/assets/sprite_7.png","src/assets/sprite_8.png");  
+  monkey_still = loadAnimation("src/assets/sprite_1.png")
+  bananaImage = loadImage("src/assets/banana.png");
+  obstaceImage = loadImage("src/assets/obstacle.png");
 }
 
 
